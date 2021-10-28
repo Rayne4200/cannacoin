@@ -48,4 +48,19 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}class CryptoBlockchain{
+    constructor(){
+        this.blockchain = [this.startGenesisBlock()];     
+    }
+    startGenesisBlock(){
+        return new CryptoBlock(0, "01/01/2020", "Initial Block in the Chain", "0");
+    }
+    obtainLatestBlock(){
+        return this.blockchain[this.blockchain.length - 1];
+    }
+    addNewBlock(newBlock){
+        newBlock.precedingHash = this.obtainLatestBlock().hash;
+        newBlock.hash = newBlock.computeHash();        
+        this.blockchain.push(newBlock);
+    }
+}
